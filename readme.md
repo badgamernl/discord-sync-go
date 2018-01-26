@@ -66,6 +66,10 @@ The config consists of all the information for the Discord bot to login and the 
   ]
 }
 ```
+* To get the `discord_guild_id` go into [developer](https://support.discordapp.com/hc/en-us/articles/206346498-Where-can-I-find-my-server-ID-) mode and right click on a channel.
+
+* To get the `discord_bot_token` Go to the [Discord developer tools](https://discordapp.com/developers/applications/me) and create a bot or use a already existing one. Scroll down to bot then `click to reveal token`
+## Roles
 The `discord` property contains the roles that the players will need to have to get the `Member` role ingame
 ```json
 {

@@ -79,7 +79,27 @@ The `discord` property contains the roles that the players will need to have to 
 ```
 
 # Output
-Small example command output
+Program output:
+```
+2018/01/26 15:15:50 Config loaded: 335µs
+2018/01/26 15:15:50 Config Loaded:
+  Token: TOKEN
+  GuildID: GUILDID
+  Roles: %ROLES
+2018/01/26 15:15:50 New Discord bot created: 296µs
+2018/01/26 15:15:51 Discord bot is running and ready: 762.27ms - BOT NAME
+2018/01/26 15:15:51 Member get: 214.197ms
+2018/01/26 15:15:51 Member parse: 6.711ms
+2018/01/26 15:15:51 Member to command: 50µs
+2018/01/26 15:15:51 Rcon ready: 25.633ms
+2018/01/26 15:15:51 Response: &{Size:10 ID:-1013797929 Type:0 Body:}
+2018/01/26 15:15:51 Rcon command send: 26.92ms
+2018/01/26 15:15:52 Discord bot Closed & process end: 2.037596s
+```
+
+---
+
+Small example command output:
 ```
 /interface Ranking._base_preset{
   ["cydes"]="Mod",

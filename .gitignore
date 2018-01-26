@@ -1,5 +1,7 @@
-config.json # Working config
-discord-sync-go # binary file
+# Working config
+*config.json
+# binary file
+discord-sync-go
 
 # Compiled Object files, Static and Dynamic libs (Shared Objects)
 *.o

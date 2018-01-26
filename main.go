@@ -17,6 +17,7 @@ import (
 	"github.com/gtaylor/factorio-rcon"
 )
 
+// ConfigJSON -
 type ConfigJSON struct {
 	Token    string `json:"discord_bot_token"`
 	Guild    string `json:"discord_guild_id"`
@@ -26,11 +27,13 @@ type ConfigJSON struct {
 	Roles    []Role `json:"roles"`
 }
 
+// Role -
 type Role struct {
 	DiscordRoles []string `json:"discord"`
 	Factorio     string   `json:"factorio"`
 }
 
+// Player -
 type Player struct {
 	Name string `json:"username"`
 	Role string `json:"role"`
@@ -40,13 +43,14 @@ type Player struct {
 var (
 	ConfigFile string
 	Config     ConfigJSON
-	GoBot      *discordgo.Session
 )
 
 func init() {
 	flag.StringVar(&ConfigFile, "c", "./config.json", "Config File location")
 	flag.Parse()
+	start := time.Now()
 	Config = loadConfiguration(ConfigFile)
+	log.Printf("Config loaded: %s", time.Since(start))
 }
 
 func main() {
@@ -59,20 +63,21 @@ func main() {
 		fmt.Println("error creating Discord session,", err)
 		return
 	}
+	log.Printf("New Discord bot created: %s", time.Since(start))
 	// Open a websocket connection to Discord and begin listening.
 	err = GoBot.Open()
 	if err != nil {
 		fmt.Println("error opening connection,", err)
 		return
 	}
-	// Print the bot status
-	log.Println("Discord bot is running and ready:", GoBot.State.User.Username)
+	log.Printf("Discord bot is running and ready: %s - %v", time.Since(start), GoBot.State.User.Username)
+
 	// Parse members
 	members, err := members(GoBot)
 	if err != nil {
 		fmt.Println(err.Error())
 	}
-	// Make command from pla
+	// Make command from players
 	command := generateCommand(members)
 
 	startRcon := time.Now()
@@ -85,21 +90,18 @@ func main() {
 	if err != nil {
 		panic(err)
 	}
-	elapsedRcon := time.Since(startRcon)
-	log.Printf("Rcon ready: %s", elapsedRcon)
+	log.Printf("Rcon ready: %s", time.Since(startRcon))
+
 	startRconCommand := time.Now()
 	response, err := r.Execute(command)
 	if err != nil {
 		panic(err)
 	}
 	log.Printf("Response: %+v\n", response)
-	elapsedRconCommand := time.Since(startRconCommand)
-	log.Printf("Rcon command send: %s", elapsedRconCommand)
+	log.Printf("Rcon command send: %s", time.Since(startRconCommand))
 
 	GoBot.Close()
-	log.Println("Discord bot Closed")
-	elapsed := time.Since(start)
-	log.Printf("Process time: %s", elapsed)
+	log.Printf("Discord bot Closed & process end: %s", time.Since(start))
 }
 
 func loadConfiguration(file string) ConfigJSON {
@@ -121,8 +123,7 @@ func generateCommand(members []*Player) string {
 		players = append(players, `["`+member.Name+`"]="`+member.Role+`"`)
 	}
 	command := `/interface Ranking._base_preset{` + strings.Join(players, ",") + `}`
-	elapsed := time.Since(start)
-	log.Printf("Member to command: %s", elapsed)
+	log.Printf("Member to command: %s", time.Since(start))
 	return command
 }
 
@@ -133,14 +134,12 @@ func members(s *discordgo.Session) ([]*Player, error) {
 	if err != nil {
 		return players, err
 	}
-	elapsed := time.Since(start)
-	log.Printf("Member get: %s", elapsed)
+	log.Printf("Member get: %s", time.Since(start))
 	start = time.Now()
 	for _, member := range members {
 		players = memberCheck(s, member, players)
 	}
-	elapsed = time.Since(start)
-	log.Printf("Member parse: %s", elapsed)
+	log.Printf("Member parse: %s", time.Since(start))
 	return players, nil
 }
 

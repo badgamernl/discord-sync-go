@@ -1,0 +1,29 @@
+{
+  "discord_bot_token": "TheBotToken",
+  "discord_guild_id": "TheDiscordGuildIDiWantToFetchMembersFrom",
+  "rcon_ip": "localhost",
+  "rcon_port": "12345",
+  "rcon_password": "myrconpassword",
+  "roles": [
+    {
+      "discord": ["Owners"],
+      "factorio": "Owner"
+    },
+    {
+      "discord": ["Developers","Factorio-Team"],
+      "factorio": "Developer"
+    },
+    {
+      "discord": ["Admins"],
+      "factorio": "Admin"
+    },
+    {
+      "discord": ["Factorio-Moderators"],
+      "factorio": "Mod"
+    },
+    {
+      "discord": ["Members","Server owners"],
+      "factorio": "Member"
+    }
+  ]
+}
